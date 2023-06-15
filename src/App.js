@@ -6,19 +6,7 @@ import Dashboard from './Components/Dashboard.jsx';
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Navbar />
-
-        <Routes>
-        <Route index component={<Home/>} />
-          <Route path="/" component={<Home/>} />
-          <Route path="/login" component={<Login/>} />
-          <Route path="/dashboard" component={<Dashboard/>} />
-
-        </Routes>
-      </BrowserRouter>
-    </div>
+      <Home/>
   );
 }
 

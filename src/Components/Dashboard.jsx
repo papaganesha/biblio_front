@@ -14,7 +14,7 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get('http://localhost:5000/data', {
+      const res = await axios.get('http://localhost:3000/api/v1/books', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
