@@ -38,17 +38,11 @@ function Home() {
   }, []);
 
   return (
-    <Grid
-    container spacing={10} sx={{ display: 'flex', flexDirection: 'row' , flexGrow: 1 }}
-      >
-      <Grid xs={12}>
-        {data.length > 0 ? (
-          data.map(book => (<Item><BookCard book={book} /></Item>))
-        ) : (<ReactLoading type='spin' color='cyanblue' height={450} width={375} />)}
-      </Grid>
-
-
-    </Grid>
+    <>
+      {data.length > 0 ? (
+        data.map(book => (<Item><BookCard book={book} /></Item>))
+      ) : (<ReactLoading type='spin' color='cyanblue' height={450} width={375} />)}
+    </>
   );
 }
 
