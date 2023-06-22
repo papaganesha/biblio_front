@@ -18,7 +18,7 @@ import { NavLink } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
-export default function Login() {
+export default function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -49,30 +49,41 @@ export default function Login() {
         <Grid item xs={12} sm={8} md={5.6} component={Paper} elevation={6} square>
           <Box
             sx={{
-              my: 8,
+              my: 6,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 0.7, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5" sx={{ mt: '0.5rem' }}>
-              Login
+            <Typography component="h1" variant="h5" sx={{ mt: '0.4rem' }}>
+              Cadastro
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Id de Registro"
-                name="email"
-                autoComplete="email"
+                type='text'
+                id="name"
+                label="Nome"
+                name="name"
+                autoComplete="name"
                 autoFocus
               />
+              <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="phone"
+              label="Telefone"
+              type="text"
+              id="phone"
+              autoComplete=""
+            />
               <TextField
                 margin="normal"
                 required
@@ -84,7 +95,7 @@ export default function Login() {
                 autoComplete="current-password"
               />
               <FormControlLabel
-              sx={{ mt: 1 }}
+              sx={{ }}
                 control={<Checkbox value="remember" color="primary" />}
                 label="Lembrar de mim"
               />
@@ -92,14 +103,14 @@ export default function Login() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 2, mb: 2 }}
               >
                Entrar
               </Button>
               <Grid container >
                 <Grid item>
-                <NavLink to="/register">
-                    {"Não possui uma conta? Cadastre-se"}
+                <NavLink to="/login">
+                    {"Já possui uma conta? Login"}
                   </NavLink>
                 </Grid>
               </Grid>

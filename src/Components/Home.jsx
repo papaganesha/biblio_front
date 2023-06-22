@@ -2,47 +2,37 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Unstable_Grid2';
-
-import ReactLoading from 'react-loading';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 
 import './Home.css';
-import BookCard from './BookCard';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
 
 
 function Home() {
-  const [data, setData] = useState([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get('http://localhost:3000/api/v1/books', {
-        // headers: {
-        //   Authorization: `Bearer ${localStorage.getItem('token')}`,
-        // },
-      });
-      setData(res.data);
-      // console.log(res.data)
-    };
-    fetchData();
-  }, []);
-
   return (
-    <>
-      {data.length > 0 ? (
-        data.map(book => (<Item><BookCard book={book} /></Item>))
-      ) : (<ReactLoading type='spin' color='cyanblue' height={450} width={375} />)}
-    </>
+    <Container sx={{
+      width: '140rem',
+      height: '32rem',
+      maxHeight: '32rem',
+      border: '1px solid blue',
+      borderRadius: '10px',
+      py: '3rem',
+      px: '3rem',
+      fontSize: '18px',
+      backgroundColor: 'white',
+    }}>
+
+      <h3>Bem-vindo(a) à nossa aplicação gerenciadora de biblioteca! </h3>
+      <p>Aqui, você encontrará uma solução prática e eficiente para organizar e controlar todo o acervo da sua biblioteca de maneira simples e intuitiva. </p>
+      <p>Seja você um bibliotecário profissional ou um apaixonado por livros, nossa aplicação foi projetada para atender às suas necessidades. Com recursos avançados de catalogação, empréstimo, reserva e pesquisa, você terá total controle sobre os livros, periódicos e outros materiais disponíveis.</p>
+      <p>Não importa se sua biblioteca é pequena ou grande, a nossa aplicação está pronta para facilitar seu trabalho e proporcionar uma experiência agradável aos usuários</p>
+      <b>
+        <p>Comece a explorar agora mesmo e desfrute de uma gestão bibliotecária eficiente e organizada!</p>
+      </b>
+    </Container>
   );
 }
 

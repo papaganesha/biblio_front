@@ -1,26 +1,78 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
-function Navbar() {
+import { NavLink } from "react-router-dom";
+
+interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window?: () => Window;
+}
+
+
+export default function DrawerAppBar(props: Props) {
+  const { window } = props;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+
+
+
+  const container = window !== undefined ? () => window().document.body : undefined;
+
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" style={{ flexGrow: 1 }}>
-          BiblioManager
-        </Typography>
-        <Button color="inherit" component={Link} to="/">
-          Home
-        </Button>
-        <Button color="inherit" component={Link} to="/dashboard">
-          Dashboard
-        </Button>
-        <Button color="inherit" component={Link} to="/login">
-          Login
-        </Button>
-      </Toolbar>
-    </AppBar>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar component="nav">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            Gerenciador de Biblioteca
+          </Typography>
+          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <Button key='Home' sx={{ color: '#fff' }}>
+              <NavLink exact to="/">Home</NavLink>
+            </Button>
+            <Button key='About' sx={{ color: '#fff' }}>
+              <NavLink to="/about">Sobre</NavLink>
+            </Button>
+            <Button key='Login' sx={{ color: '#fff' }}>
+              <NavLink to="/login">Login</NavLink>
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 }
 
-export default Navbar;
+
