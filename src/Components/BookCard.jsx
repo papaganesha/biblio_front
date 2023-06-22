@@ -1,21 +1,36 @@
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
-function BookCard({img_url, name, author, publisher, stock}) {
+function BookCard({book}) {
   return (
-    <Card style={{ width: '20rem', height: '45rem'}}>
-      <Card.Img variant="top" src={img_url} />
-      <Card.Body>
-        <Card.Title>{name}</Card.Title>
-      </Card.Body>
-      <ListGroup className="list-group-flush">
-        <ListGroup.Item>{author}</ListGroup.Item>
-        <ListGroup.Item>{publisher}</ListGroup.Item>
-        <ListGroup.Item>{stock}</ListGroup.Item>
-      </ListGroup>
-
-    </Card>
-  );
+      <Card sx={{ maxWidth: 350 }}>
+        <CardMedia
+          sx={{ height: 350 }}
+          image={book.img_url}
+          title={book.name}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {book.name}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Autor: {book.author}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Editora: {book.publisher}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Estoque: {book.stock}
+          </Typography>
+        </CardContent>
+      </Card>
+    );
 }
 
-export default BookCard;
+
+export default BookCard
+
