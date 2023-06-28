@@ -14,6 +14,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+import { AuthContext } from '../Contexts/AuthContext';
+
 import { NavLink } from "react-router-dom";
 
 interface Props {
@@ -28,6 +30,7 @@ interface Props {
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { authenticated, handleLogout} = React.useContext(AuthContext)
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -37,8 +40,10 @@ export default function DrawerAppBar(props: Props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
+  console.debug("NAV AUTH: ", authenticated)
+
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box className="navbar" sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
@@ -59,15 +64,38 @@ export default function DrawerAppBar(props: Props) {
             Gerenciador de Biblioteca
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Button key='Home' sx={{ color: '#fff' }}>
-              <NavLink exact to="/">Home</NavLink>
-            </Button>
-            <Button key='About' sx={{ color: '#fff' }}>
-              <NavLink to="/about">Sobre</NavLink>
-            </Button>
-            <Button key='Login' sx={{ color: '#fff' }}>
-              <NavLink to="/login">Login</NavLink>
-            </Button>
+
+            {!authenticated ? (
+              <>
+                <Button key='Home' sx={{ color: '#fff' }}>
+                  <NavLink exact to="/">Home</NavLink>
+                </Button>
+                <Button key='About' sx={{ color: '#fff' }}>
+                  <NavLink to="/about">Sobre</NavLink>
+                </Button>
+                <Button key='Login' sx={{ color: '#fff' }}>
+                  <NavLink to="/login">Login</NavLink>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button key='Home' sx={{ color: '#fff' }}>
+                  <NavLink exact to="/">Home</NavLink>
+                </Button>
+                <Button key='About' sx={{ color: '#fff' }}>
+                  <NavLink to="/about">Sobre</NavLink>
+                </Button>
+                <Button key='Books' sx={{ color: '#fff' }}>
+                <NavLink to="/books">Livros</NavLink>
+              </Button>
+                <Button key='Profile' sx={{ color: '#fff' }}>
+                  <NavLink to="/profile">Perfil</NavLink>
+                </Button>
+                <Button key='Logout' onClick={()=>handleLogout()} sx={{ color: '#fff' }}>
+                  <NavLink to="/login">Logout</NavLink>
+                </Button>
+              </>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
