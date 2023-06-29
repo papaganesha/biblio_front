@@ -18,7 +18,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import BadAlert from '../Components/BadAlert.jsx';
+import DismissAlert from '../Components/DismissAlert.jsx';
 
 import { NavLink } from "react-router-dom";
 import axios from 'axios';
@@ -27,18 +27,18 @@ import axios from 'axios';
 
 const defaultTheme = createTheme();
 
-export default function Login() {
+export default function SignIn() {
     const [data, setData] = useState([])
-    const {authenticated, handleLogin, error, setError, loading} = useContext(AuthContext)
+    const {authenticated, handleLogin, error, setError, loading, setLoading} = useContext(AuthContext)
 
     console.debug("Login Auth",authenticated)
     console.debug("Loading",loading)
 
     useEffect(()=>{
-        setError('')
     })
 
     const handleSubmit = async (event) => {
+        setLoading(true)
         event.preventDefault();
         setError('')
         const data = new FormData(event.currentTarget);
@@ -48,6 +48,7 @@ export default function Login() {
         });
         
         await handleLogin(data.get('regId'), data.get('password'));
+        setTimeout(() => setLoading(false), 2000)
     };
 
 
@@ -86,7 +87,7 @@ export default function Login() {
                         <Typography component="h1" variant="h5" sx={{ mt: '0.5rem' }}>
                             Login
                         </Typography>
-                        {error.length > 0 && (<BadAlert text={error} setError={setError}/>)}
+                        {error.length > 0 && (<DismissAlert type="error" text={error} setError={setError}/>)}
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
                             <TextField
                                 margin="normal"

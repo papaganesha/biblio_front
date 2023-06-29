@@ -18,7 +18,7 @@ import { NavLink } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
-export default function Register() {
+export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

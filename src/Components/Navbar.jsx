@@ -73,8 +73,8 @@ export default function DrawerAppBar(props: Props) {
                 <Button key='About' sx={{ color: '#fff' }}>
                   <NavLink to="/about">Sobre</NavLink>
                 </Button>
-                <Button key='Login' sx={{ color: '#fff' }}>
-                  <NavLink to="/login">Login</NavLink>
+                <Button key='SignIn' sx={{ color: '#fff' }}>
+                  <NavLink to="/signin">Login</NavLink>
                 </Button>
               </>
             ) : (
