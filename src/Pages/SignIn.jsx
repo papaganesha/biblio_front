@@ -63,7 +63,7 @@ export default function SignIn() {
                     sm={4}
                     md={6}
                     sx={{
-                        backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+                        backgroundImage: 'url(https://picsum.photos/200/300)',
                         backgroundRepeat: 'no-repeat',
                         backgroundColor: (t) =>
                             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -87,7 +87,7 @@ export default function SignIn() {
                         <Typography component="h1" variant="h5" sx={{ mt: '0.5rem' }}>
                             Login
                         </Typography>
-                        {error.length > 0 && (<DismissAlert type="error" text={error} setError={setError}/>)}
+                        {error.length > 0 && (<DismissAlert type="error" text={error} setText={setError}/>)}
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
                             <TextField
                                 margin="normal"

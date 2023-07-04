@@ -70,9 +70,6 @@ export default function DrawerAppBar(props: Props) {
                 <Button key='Home' sx={{ color: '#fff' }}>
                   <NavLink exact to="/">Home</NavLink>
                 </Button>
-                <Button key='About' sx={{ color: '#fff' }}>
-                  <NavLink to="/about">Sobre</NavLink>
-                </Button>
                 <Button key='SignIn' sx={{ color: '#fff' }}>
                   <NavLink to="/signin">Login</NavLink>
                 </Button>
@@ -81,9 +78,6 @@ export default function DrawerAppBar(props: Props) {
               <>
                 <Button key='Home' sx={{ color: '#fff' }}>
                   <NavLink exact to="/">Home</NavLink>
-                </Button>
-                <Button key='About' sx={{ color: '#fff' }}>
-                  <NavLink to="/about">Sobre</NavLink>
                 </Button>
                 <Button key='Books' sx={{ color: '#fff' }}>
                 <NavLink to="/books">Livros</NavLink>

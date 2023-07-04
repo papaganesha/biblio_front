@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Navigate, redirect } from 'react-router-dom';
 
 
 import Api from '../../Api.js';
@@ -9,6 +8,7 @@ export default function useAuth() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [errorType, setErrorType] = useState("")
 
 
   useEffect(() => {
@@ -37,8 +37,6 @@ export default function useAuth() {
       setAuthenticated(false)
       console.log(err.response.data)
       setTimeout(() => setError(err.response.data), 2100)
-
-
     } 
 
     if (res) {
@@ -49,8 +47,6 @@ export default function useAuth() {
       localStorage.setItem('refreshToken', refreshToken);
       Api.defaults.headers.common['Authorization'] = refreshToken;
       History.push('/books');
-
-
     }
 
     setTimeout(() => setLoading(false), 2000)
@@ -69,5 +65,5 @@ export default function useAuth() {
     History.push('/signin');
   }
 
-  return { authenticated, loading, setLoading, handleLogin, handleLogout, error, setError };
+  return { authenticated, loading, setLoading, handleLogin, handleLogout, error, setError, errorType, setErrorType };
 }

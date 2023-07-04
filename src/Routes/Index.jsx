@@ -1,7 +1,9 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import {  Routes, Route, useLocation } from 'react-router-dom';
+
+import History from '../History.js';
+
 
 import Home from '../Pages/Home'
-import About from '../Pages/About'
 import SignIn from '../Pages/SignIn'
 import SignUp from '../Pages/SignUp'
 import Profile from '../Pages/Profile'
@@ -14,14 +16,12 @@ import Navbar from '../Components/Navbar';
 
 
 export default function RoutesIndex() {
-    const { pathname } = useLocation()
 
     return (
         <AuthProvider>
             <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
+            <Routes history={History}>
+                <Route path="/" element={<Home />} exact="true"/>
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
 

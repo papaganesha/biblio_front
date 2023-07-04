@@ -7,56 +7,64 @@ import SearchIcon from '@mui/icons-material/Search';
 
 
 const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
+    position: 'relative',
+    border: '1px solid black',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.95),
+    '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.80),
+    },
+    marginBottom: theme.spacing(2),
+    marginRight: theme.spacing(3),
+    width: '77%',
+    [theme.breakpoints.up('sm')]: {
+        width: '77%',
+    },
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
+    color: 'inherit',
     width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: '18ch',
+        },
     },
-  },
 }));
 
-export default function SearchComponent({data}) {
+export default function SearchComponent({ data }) {
+    const [searchInput, setSearchInput] = React.useState("")
 
-  return (
-          <Search>
+    React.useEffect(() => {
+        const result = data.filter(book => book.name.indexOf(searchInput) === -1)
+        console.log(result)
+    },[searchInput]);
+
+    return (
+        <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+                <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
+                onChange={(e) => { setSearchInput(e.target.value) }}
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
             />
-          </Search>
-  );
+        </Search>
+    );
 }
