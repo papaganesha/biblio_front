@@ -19,7 +19,7 @@ const style = {
   p: 4,
 };
 
-export default function RemoveBookModal({book, handleDelete, error, errorType, setError, setErrorType }) {
+export default function RemoveStudentModal({name, handleDelete, error, errorType, setError, setErrorType }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setError("")
@@ -42,10 +42,10 @@ export default function RemoveBookModal({book, handleDelete, error, errorType, s
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Quer excluir o livro {Capitalize(book.name)}?
+            Quer excluir o Estudante {Capitalize(name)}?
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <Button onClick={async ()=> await handleDelete(book.name, handleClose)}>Excluir</Button>
+          <Button onClick={async ()=> await handleDelete(handleClose)}>Excluir</Button>
           <Button onClick={handleClose}>Cancelar</Button>
           </Typography>
         </Box>

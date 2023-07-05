@@ -1,6 +1,7 @@
 import './Books.css'
 import { useState, useEffect, useContext } from 'react'
 import ReactLoading from 'react-loading';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Capitalize from '../Utils/Capitalize';
 
@@ -25,6 +26,7 @@ import SearchComponent from '../Components/Search';
 
 
 import Api from '../Api.js';
+import RemoveBookModal from '../Components/RemoveBookModal';
 
 function Books() {
     const [data, setData] = useState([])
@@ -112,6 +114,34 @@ function Books() {
             setError(res.data)
 
         }
+    }
+
+        //FIRST POPUP A CONFIRMATION
+    //CHECK CONFIRMATION
+    //PROCEED WITH WITHDRAW REQUEST
+    //SHOW MESSAGE ACCORDINGLY WITH THE RESULT
+    async function handleDelete(name, handleClose) {
+        setError("")
+        let res
+        try {
+            res = await Api.delete('/books', {
+                data: {
+                    bookName: name
+                }
+            })
+        }
+        catch (err) {
+            handleClose()
+            setErrorType("error")
+            setError(err.response.data)
+        }
+        if (res) {
+            await fetchData()
+            handleClose()
+            setErrorType("success")
+            setError(res.data)
+        }
+
     }
 
     const fetchData = async () => {
@@ -218,7 +248,7 @@ else{
                                 <CardActions>
                                     <WithdrawModal book={book} handleWithdraw={handleWithdraw} error={error} setError={setError} errorType={errorType} setErrorType={setErrorType}/>
                                     <EditBookModal book={book} handleBookUpdate={handleBookUpdate} error={error} setError={setError} errorType={errorType} setErrorType={setErrorType}/>
-                                    <Button size="small">Excluir</Button>
+                                    <RemoveBookModal book={book} handleDelete={handleDelete} error={error} setError={setError} errorType={errorType} setErrorType={setErrorType}/>
                                 </CardActions>
                             </Card>
                         </Grid>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, ReactElement } from 'react'
 import Api from '../Api'
 import Container from '@mui/material/Container';
+import { useNavigate } from 'react-router-dom';
 
 import ReactLoading from 'react-loading';
 
@@ -10,6 +11,7 @@ import DismissAlert from '../Components/DismissAlert';
 
 import { Navigate } from 'react-router-dom';
 
+import RemoveStudentModal from '../Components/RemoveStudentModal';
 
 
 import Box from '@mui/material/Box';
@@ -64,10 +66,12 @@ const InlineEdit = ({ label, value, setValue, editStudent }) => {
 
 
 function Profile() {
+  const navigate = useNavigate(); 
+
   const [name, setName] = useState("")
   const [phone, setPhone] = useState("")
 
-  const { authenticated, loading, setLoading, error, setError, errorType, setErrorType } = useContext(AuthContext)
+  const { authenticated, loading, setLoading, error, setError, errorType, setErrorType, handleLogout } = useContext(AuthContext)
   const [userInfo, setUserInfo] = useState([])
   const [userWithdraws, setUserWithdraws] = useState([])
 
@@ -121,6 +125,25 @@ function Profile() {
     setLoading(false)
   }
 
+  const deleteStudent = async (name) => {
+    setLoading(true)
+    let res
+    try {
+      res = await Api.delete('/students')
+    }
+    catch (error) {
+      setErrorType('error')
+      setError(error.response.data)
+    }
+    if (res) {
+      handleLogout()
+      setErrorType('success')
+      setError(res.data)
+    }
+    setLoading(false)
+  }
+
+
   const fecthUserInfo = async () => {
     setLoading(true)
     let res
@@ -134,7 +157,7 @@ function Profile() {
       setName(res.data.name)
       setPhone(res.data.phone)
     }
-    setLoading(false)
+    setTimeout(()=> setLoading(false), 5000)
   }
 
   const fecthUserWithdraws = async () => {
@@ -144,13 +167,13 @@ function Profile() {
       res = await Api.get('/withdraws')
     }
     catch (error) {
-      setErrorType('error')
-      setError(error.response.data)
+      // setErrorType('error')
+      // setError(error.response.data)
     }
     if (res) {
       setUserWithdraws(res.data)
     }
-    setLoading(false)
+    setTimeout(()=> setLoading(false), 4000)
   }
 
   useEffect(() => {
@@ -181,6 +204,8 @@ function Profile() {
               <p>Nome: <InlineEdit label="name" value={name} setValue={setName} editStudent={editStudent} /></p>
               <p>Telefone: <InlineEdit label="phone" value={phone} setValue={setPhone} editStudent={editStudent} /></p>
               <p>Retiradas: {userInfo.withdraw}</p>
+              <RemoveStudentModal name={name} handleDelete={deleteStudent} error={error} setError={setError} errorType={errorType} setErrorType={setErrorType}/>
+
             </Box>
           ) : (
             <Box sx={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: 1, px: 4, py: 3 ,backgroundColor: 'white'}}>
