@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 
+import { Navigate } from 'react-router-dom';
 
 import Api from '../../Api.js';
 import History from '../../History.js';
@@ -36,34 +37,62 @@ export default function useAuth() {
     catch (err) {
       setAuthenticated(false)
       console.log(err.response.data)
-      setTimeout(() => setError(err.response.data), 2100)
+      setError(err.response.data)
     } 
 
     if (res) {
       setAuthenticated(true);
       const { accessToken, refreshToken } = res.data
-      console.log(`AccessToken: ${accessToken}\nRefreshToken: ${refreshToken}`)
+      localStorage.setItem('authenticated', true);
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
       Api.defaults.headers.common['Authorization'] = refreshToken;
       History.push('/books');
+      
     }
 
-    setTimeout(() => setLoading(false), 2000)
+    setLoading(false)
 
   }
 
-  function handleLogout() {
+  async function handleRegister(name,phone, password) {
+    setLoading(true)
+    let res
+    try {
+      res = await Api.post('/students', {
+        name,
+        phone,
+        password
+      })
+    }
+    catch (err) {
+      console.log(err.response.data)
+      setErrorType('error')
+      setError(err.response.data)
+
+    } 
+
+    if (res) {
+      setErrorType('sucess')
+      setError(res.data)
+      // History.push('/signin');
+    }
+
+    setLoading(false)
+
+  }
+
+  async function handleLogout() {
     console.log('LOGOUT')
-    setAuthenticated(true);
+    setAuthenticated(false);
 
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
 
     Api.defaults.headers.Authorization = undefined;
     setLoading(false)
-    History.push('/signin');
+    // History.push('/signin');
   }
 
-  return { authenticated, loading, setLoading, handleLogin, handleLogout, error, setError, errorType, setErrorType };
+  return { authenticated, loading, setLoading, handleLogin, handleLogout, error, setError, errorType, setErrorType, handleRegister};
 }

@@ -5,11 +5,11 @@ import ReactLoading from 'react-loading';
 import Capitalize from '../Utils/Capitalize';
 
 import WithdrawModal from '../Components/WithdrawModal';
+import EditBookModal from '../Components/EditBookModal';
+
 
 import { Navigate } from 'react-router-dom'
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -34,10 +34,7 @@ function Books() {
     const { authenticated, error, setError, handleLogout, setLoading, loading, errorType, setErrorType } = useContext(AuthContext)
     const accessToken = localStorage.getItem('accessToken')
     const refreshToken = localStorage.getItem('refreshToken')
-    console.debug("AUTH: ", authenticated)
-    console.debug("ACCESS: ", accessToken)
-    console.debug("REFRESH: ", refreshToken)
-    console.debug("LOADING: ", loading)
+
 
     //FIRST POPUP A CONFIRMATION
     //CHECK CONFIRMATION
@@ -61,6 +58,65 @@ function Books() {
         if (res) {
             console.log(res)
             fetchData()
+            setErrorType("success")
+            setError(res.data)
+
+        }
+        // console.log(res.data)
+        setLoading(false);
+
+    }
+
+        //FIRST POPUP A CONFIRMATION
+    //CHECK CONFIRMATION
+    //PROCEED WITH WITHDRAW REQUEST
+    //SHOW MESSAGE ACCORDINGLY WITH THE RESULT
+    async function handleBookUpdate(name, label, value) {
+        setLoading(true);
+        setError("")
+        let res
+        try {
+            if (label == 'newName') {
+                res = await Api.put('/books', {
+                  name: name,
+                  newName : value
+                })
+              }
+              if (label == 'author') {
+                res = await Api.put('/books', {
+                    name: name,
+                  author: value
+                })
+              }
+              if (label == 'publisher') {
+                res = await Api.put('/books', {
+                    name: name,
+                    publisher: value
+                })
+              }
+              if (label == 'publiDate') {
+                res = await Api.put('/books', {
+                    name: name,
+                    publiDate: value
+                })
+              }
+              if (label == 'stock') {
+                res = await Api.put('/books', {
+                    name: name,
+                    stock: value
+                })
+              }
+
+        }
+        catch (err) {
+            console.log("aa", err.response.data)
+            setErrorType("error")
+
+            setError(err.response.data)
+        }
+        if (res) {
+            console.log("aa", res)
+            await fetchData()
             setErrorType("success")
             setError(res.data)
 
@@ -97,12 +153,12 @@ function Books() {
     };
 
     useEffect(() => {
-
-
-
+        setError("")    
         fetchData();
 
     }, []);
+
+
 
     if (loading) {
         return (
@@ -119,6 +175,7 @@ function Books() {
     }
 
     if (!authenticated) {
+        console.log("NOTNOT")
         return <Navigate to='/signin' />
     }
 
@@ -129,11 +186,11 @@ function Books() {
                     <Typography sx={{textAlign: 'center'}} variant="h3" component="h3">Catalogo de Livros</Typography>
                 </Box>
 
-                {error.length > 0 && 
+                {error.length > 0 && (
                     <Box sx={{ width: '100%', display:'flex', alignItems: 'center', justifyContent: 'center'}} >
-                    <DismissAlert type={errorType} text={error} setText={setError} />
+                        <DismissAlert type={errorType} text={error} setText={setError} />
                     </Box>
-                }
+                )}
                 {/* End hero unit */}
                 <Box sx={{ display:'flex', alignItems: 'center', justifyContent: 'center' , py: 2, mb:2}} className="search_div">
                     <SearchComponent data={data} setData={setData} />
@@ -166,8 +223,8 @@ function Books() {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <WithdrawModal book={book} handleWithdraw={handleWithdraw} message={error} setMessage={setError} />
-                                    <Button size="small">Editar</Button>
+                                    <WithdrawModal book={book} handleWithdraw={handleWithdraw} error={error} setError={setError} errorType={errorType} setErrorType={setErrorType}/>
+                                    <EditBookModal book={book} handleBookUpdate={handleBookUpdate} error={error} setError={setError} errorType={errorType} setErrorType={setErrorType}/>
                                     <Button size="small">Excluir</Button>
                                 </CardActions>
                             </Card>

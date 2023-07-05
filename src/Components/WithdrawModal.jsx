@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import DismissAlert from './DismissAlert';
+import Capitalize from '../Utils/Capitalize'
 
 const style = {
   position: 'absolute',
@@ -17,7 +18,7 @@ const style = {
   p: 4,
 };
 
-export default function WithdrawModal({book, handleWithdraw}) {
+export default function WithdrawModal({book, handleWithdraw, error, errorType, setError, setErrorType}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -33,10 +34,10 @@ export default function WithdrawModal({book, handleWithdraw}) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Quer retirar o livro {book.name}?
+            Quer retirar o livro {Capitalize(book.name)}?
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <Button onClick={()=> handleWithdraw(book.name)}>Retirar</Button>
+          <Button onClick={async ()=> await handleWithdraw(book.name)}>Retirar</Button>
           <Button onClick={handleClose}>Cancelar</Button>
           </Typography>
         </Box>

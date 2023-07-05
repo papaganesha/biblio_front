@@ -7,5 +7,5 @@ import { AuthContext } from '../Contexts/AuthContext';
 export default function PrivateRoute({children}){
     const {authenticated} = React.useContext(AuthContext);
 
-    return authenticated ? children : <Navigate to="/signin" />;
+    return authenticated ? children : <Navigate to="/signin" replace  />;
 }

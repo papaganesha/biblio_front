@@ -4,24 +4,16 @@ import Container from '@mui/material/Container';
 
 import ReactLoading from 'react-loading';
 
-import './Home.css';
-
 import { AuthContext } from '../Contexts/AuthContext';
 
-import { styled } from '@mui/material/styles';
+import DismissAlert from '../Components/DismissAlert';
+
+import { Navigate } from 'react-router-dom';
+
+
+
 import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-
-import Grid from '@mui/material/Grid';
-import FolderIcon from '@mui/icons-material/Folder';
-import DeleteIcon from '@mui/icons-material/Delete';
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -32,14 +24,86 @@ import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 
 
-const Demo = styled('Container')(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
-}));
+const InlineEdit = ({ label, value, setValue, editStudent }) => {
+  console.log("44 ", label)
+  const [editingValue, setEditingValue] = useState(value);
+  const onChange = (event) => setEditingValue(event.target.value);
+  const onKeyDown = (event) => {
+    if (event.key === "Enter" || event.key === "Escape") {
+      event.target.blur();
+    }
+  }
+
+  const onBlur = async (event) => {
+    if (event.target.value.trim() === "") {
+      setEditingValue(value);
+    } else {
+      if (event.target.value !== value) {
+        setValue(event.target.value)
+        if (label == "name") {
+          await editStudent('name', event.target.value)
+        }
+        if (label == "phone") {
+          await editStudent('phone', event.target.value)
+        }
+      }
+
+    }
+  }
+
+
+  return (
+    <input
+      type="text"
+      aria-label="Field name"
+      value={editingValue}
+      onChange={onChange}
+      onKeyDown={onKeyDown}
+      onBlur={onBlur} />
+  )
+}
+
 
 function Profile() {
-  const { authenticated, loading, setLoading } = useContext(AuthContext)
+  const [name, setName] = useState("")
+  const [phone, setPhone] = useState("")
+
+  const { authenticated, loading, setLoading, error, setError, errorType, setErrorType } = useContext(AuthContext)
   const [userInfo, setUserInfo] = useState([])
   const [userWithdraws, setUserWithdraws] = useState([])
+
+  const editStudent = async (label, value) => {
+    setLoading(true)
+    console.log("33: ", label, " --- 44: ", value)
+    let res
+    try {
+      if (label == 'name') {
+        res = await Api.put('/students', {
+          name: value
+        })
+      }
+      if (label == 'phone') {
+        res = await Api.put('/students', {
+          phone: value
+        })
+      }
+
+    }
+    catch (error) {
+      fecthUserInfo()
+      console.log("1: ", error.response)
+      setErrorType('error')
+      setError(error.response.data)
+    }
+    if (res) {
+      fecthUserInfo()
+      setErrorType('success')
+      setError(res.data)
+
+      console.log("2: ", res.data)
+    }
+    setLoading(false)
+  }
 
   const givebackBook = async (name) => {
     console.log("name", name)
@@ -51,10 +115,13 @@ function Profile() {
       })
     }
     catch (error) {
-      console.log("gb error", error.response)
+      setErrorType('error')
+      setError(error.response.data)
     }
     if (res) {
-      console.log("giveback:", res.data)
+      setErrorType('success')
+      setError(res.data)
+      fecthUserInfo()
       fecthUserWithdraws()
     }
     setLoading(false)
@@ -72,6 +139,8 @@ function Profile() {
     if (res) {
       console.log(res.data)
       setUserInfo(res.data)
+      setName(res.data.name)
+      setPhone(res.data.phone)
     }
     setLoading(false)
   }
@@ -93,77 +162,95 @@ function Profile() {
   }
 
   useEffect(() => {
+    setError("")
     fecthUserInfo()
     fecthUserWithdraws()
 
   }, [])
+
 
   function RenderProfileInfo({ userInfo, withdraws }) {
     console.log(userInfo, "--- ", withdraws)
     if (userInfo && withdraws) {
       return (
         <Box>
-          <Box sx={{ mt:1, mb: 3 }}>
-          <Typography variant="h4" component="h4" sx={{textAlign: 'center'}}>Perfil - Controle</Typography>
+          <Box sx={{ mt: 1, mb: 3 }}>
+            <Typography variant="h4" component="h4" sx={{ textAlign: 'center' }}>Perfil - Controle</Typography>
 
           </Box>
 
-          <Box sx={{ border: '1px solid black', borderRadius: 1, px: 4, py: 3 }}>
-            <p>Nome: {userInfo.name}</p>
-            <p>Telefone: {userInfo.phone}</p>
-            <p>Retiradas: {userInfo.withdraw}</p>
+          {error.length > 0 && (
+            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+              <DismissAlert type={errorType} text={error} setText={setError} />
+            </Box>
+          )}
+
+          {userInfo.length != 0 ? (
+            <Box sx={{ border: '1px solid black', borderRadius: 1, px: 4, py: 3 }}>
+              <p>Nome: <InlineEdit label="name" value={name} setValue={setName} editStudent={editStudent} /></p>
+              <p>Telefone: <InlineEdit label="phone" value={phone} setValue={setPhone} editStudent={editStudent} /></p>
+              <p>Retiradas: {userInfo.withdraw}</p>
+            </Box>
+          ) : (
+            <Box sx={{ border: '1px solid black', borderRadius: 1, px: 4, py: 3 }}>
+              <p>Nome: <ReactLoading type='spin' color='black' height={25} width={25} /></p>
+              <p>Telefone: <ReactLoading type='spin' color='black' height={25} width={25} /></p>
+              <p>Retiradas: <ReactLoading type='spin' color='black' height={25} width={25} /></p>
+            </Box>
+          )}
+
+          <Box sx={{ border: '1px solid black', borderRadius: 1, mt: 5, px: 2 }}>
+            <Typography variant="h5" component="h5" sx={{ textAlign: 'center', p: 2, mt: 2 }}>Livros Alugados</Typography>
+
+            <TableContainer component={Paper} sx={{ mt: 2, mb: 8, border: '1px solid black' }}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ISBN</TableCell>
+                    <TableCell align="left">TITULO</TableCell>
+                    <TableCell align="left">RETIRADA</TableCell>
+                    <TableCell align="left">DATA DEVOLUCAO</TableCell>
+                    <TableCell align="left">RETORNO</TableCell>
+                    <TableCell align="left">ENTREGUE</TableCell>
+                    <TableCell align="left">ATRASO</TableCell>
+                    <TableCell align="left">DEVOLVER</TableCell>
+
+
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+
+                  {withdraws.length > 0 ? (
+                    withdraws.map((withdraw) => {
+                      return (
+
+                        <TableRow
+                          key={withdraw.id}
+                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                          <TableCell align="left">{withdraw.book_isbn}</TableCell>
+                          <TableCell align="left">{withdraw.book_name}</TableCell>
+                          <TableCell align="left">{withdraw.start_date}</TableCell>
+                          <TableCell align="left">{withdraw.return_date}</TableCell>
+                          <TableCell align="left">{withdraw.giveback_date}</TableCell>
+                          <TableCell align="left">{withdraw.done ? "S" : "N"}</TableCell>
+                          <TableCell align="left">{withdraw.late}</TableCell>
+                          {withdraw.done !== true ? (
+                            <TableCell align="left"><Button variant="contained" value={withdraw.book_name} onClick={async (e) => { await givebackBook(e.currentTarget.value) }}>Devolver</Button></TableCell>
+                          ) : (
+                            <TableCell align="left">Devolvido</TableCell>
+                          )}
+
+                        </TableRow>
+                      )
+                    })
+                  ) : (
+                    <Typography sx={{ ml: 3, py: 2 }}>Nenhum livro alugado</Typography>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Box>
-
-          <Box sx={{ border: '1px solid black', borderRadius: 1, mt: 5, px: 2}}>
-          <Typography variant="h5" component="h5" sx={{textAlign: 'center', p: 2, mt:2}}>Livros Alugados</Typography>
-
-          <TableContainer component={Paper} sx={{mt:2, mb: 8, border: '1px solid black'}}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>ISBN</TableCell>
-                  <TableCell align="left">TITULO</TableCell>
-                  <TableCell align="left">RETIRADA</TableCell>
-                  <TableCell align="left">DATA DEVOLUCAO</TableCell>
-                  <TableCell align="left">RETORNO</TableCell>
-                  <TableCell align="left">ENTREGUE</TableCell>
-                  <TableCell align="left">ATRASO</TableCell>
-                  <TableCell align="left">DEVOLVER</TableCell>
-
-
-                </TableRow>
-              </TableHead>
-              <TableBody>
-
-                {withdraws.length > 0 ? (
-                  withdraws.map((withdraw) => {
-                    return (
-
-                      <TableRow
-                        key={withdraw.id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell align="left">{withdraw.book_isbn}</TableCell>
-                        <TableCell align="left">{withdraw.book_name}</TableCell>
-                        <TableCell align="left">{withdraw.start_date}</TableCell>
-                        <TableCell align="left">{withdraw.return_date}</TableCell>
-                        <TableCell align="left">{withdraw.giveback_date}</TableCell>
-                        <TableCell align="left">{withdraw.done ? "S" : "N"}</TableCell>
-                        <TableCell align="left">{withdraw.late}</TableCell>
-                        {withdraw.done !== true ? (
-                          <TableCell align="left"><Button variant="contained" value={withdraw.book_name} onClick={async (e) => { await givebackBook(e.currentTarget.value) }}>Devolver</Button></TableCell>
-                        ):(
-                          <TableCell align="left">Devolvido</TableCell>
-                        )}
-
-                      </TableRow>
-                    )
-                  })
-                ) : ('Nenhum livro alugado')}
-              </TableBody>
-            </Table>
-          </TableContainer>
-         </Box>
         </Box>
       )
     }
@@ -176,8 +263,13 @@ function Profile() {
     }
   }
 
+  if(!authenticated){
+    <Navigate to="/signin" />
+  }
+
+
   return (
-    <Box sx={{ px: 6, py: 4, mt: 8}}>
+    <Box sx={{ px: 6, py: 4, mt: 8 }}>
       <RenderProfileInfo userInfo={userInfo} withdraws={userWithdraws} />
     </Box>
   );

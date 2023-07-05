@@ -1,5 +1,5 @@
-import {  Routes, Route, useLocation } from 'react-router-dom';
-
+import {  BrowserRouter, Routes, Route } from 'react-router-dom';
+import * as React from 'react'
 import History from '../History.js';
 
 
@@ -14,10 +14,9 @@ import PrivateRoute from './PrivateRoute';
 import { AuthProvider } from '../Contexts/AuthContext';
 import Navbar from '../Components/Navbar';
 
-
 export default function RoutesIndex() {
-
     return (
+        <BrowserRouter>
         <AuthProvider>
             <Navbar />
             <Routes history={History}>
@@ -28,17 +27,17 @@ export default function RoutesIndex() {
                 <Route path="/profile" element={
                     <PrivateRoute>
                         <Profile />
-                    </PrivateRoute >}
+                    </PrivateRoute >
+                }
                 />
-
                 <Route path="/books" element={
-                    <PrivateRoute>
+                    <PrivateRoute >
                         <Books />
-                    </PrivateRoute >}
+                    </PrivateRoute >
+                }
                 />
-
-
             </Routes>
         </AuthProvider>
+        </BrowserRouter>
     )
 }

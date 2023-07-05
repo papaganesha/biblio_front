@@ -2,13 +2,7 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -31,16 +25,13 @@ export default function DrawerAppBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { authenticated, handleLogout} = React.useContext(AuthContext)
+  const refreshToken = localStorage.getItem('refreshToken')
+
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
-
-
-  const container = window !== undefined ? () => window().document.body : undefined;
-
-  console.debug("NAV AUTH: ", authenticated)
 
   return (
     <Box className="navbar" sx={{ display: 'flex' }}>
@@ -73,6 +64,9 @@ export default function DrawerAppBar(props: Props) {
                 <Button key='SignIn' sx={{ color: '#fff' }}>
                   <NavLink to="/signin">Login</NavLink>
                 </Button>
+                <Button key='SignUp' sx={{ color: '#fff' }}>
+                <NavLink to="/signup">Cadastro</NavLink>
+              </Button>
               </>
             ) : (
               <>
@@ -82,11 +76,11 @@ export default function DrawerAppBar(props: Props) {
                 <Button key='Books' sx={{ color: '#fff' }}>
                 <NavLink to="/books">Livros</NavLink>
               </Button>
-                <Button key='Profile' sx={{ color: '#fff' }}>
+                <Button key='Profile' sx={{ color: '#fff', style: 'none'}}>
                   <NavLink to="/profile">Perfil</NavLink>
                 </Button>
-                <Button key='Logout' onClick={()=>handleLogout()} sx={{ color: '#fff' }}>
-                  <NavLink to="/login">Logout</NavLink>
+                <Button key='Logout' onClick={async()=>await handleLogout()} sx={{ color: '#fff' }}>
+                  <NavLink to="/signin">Logout</NavLink>
                 </Button>
               </>
             )}

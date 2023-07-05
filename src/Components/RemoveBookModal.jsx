@@ -36,7 +36,7 @@ export default function WithdrawModal({book, handleWithdraw}) {
             Quer retirar o livro {book.name}?
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <Button onClick={()=> handleWithdraw(book.name)}>Retirar</Button>
+          <Button onClick={async ()=> await handleWithdraw(book.name)}>Retirar</Button>
           <Button onClick={handleClose}>Cancelar</Button>
           </Typography>
         </Box>
