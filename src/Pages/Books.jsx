@@ -50,19 +50,15 @@ function Books() {
             })
         }
         catch (err) {
-            console.log(err.response.data)
             setErrorType("error")
-
             setError(err.response.data)
         }
         if (res) {
-            console.log(res)
             fetchData()
             setErrorType("success")
             setError(res.data)
 
         }
-        // console.log(res.data)
         setLoading(false);
 
     }
@@ -109,19 +105,15 @@ function Books() {
 
         }
         catch (err) {
-            console.log("aa", err.response.data)
             setErrorType("error")
-
             setError(err.response.data)
         }
         if (res) {
-            console.log("aa", res)
             await fetchData()
             setErrorType("success")
             setError(res.data)
 
         }
-        // console.log(res.data)
         setLoading(false);
 
     }
@@ -135,12 +127,10 @@ function Books() {
         }
         catch (err) {
             if (err.response.status == 401) {
-                console.log(err.response.statusText)
                 setErrorType("error")
                 setError(`${err.response.statusText}: ${err.response.data.message}`)
                 setLoading(false)
             } else {
-                console.log(err.response.statusText)
                 setErrorType("error")
                 setError(`${err.response.statusText}: ${err.response.data.message}`)
             }
@@ -148,7 +138,6 @@ function Books() {
         if (res) {
             setData(res.data);
         }
-        // console.log(res.data)
         setLoading(false);
     };
 
@@ -175,7 +164,6 @@ function Books() {
     }
 
     if (!authenticated) {
-        console.log("NOTNOT")
         return <Navigate to='/signin' />
     }
 

@@ -26,22 +26,16 @@ export default function SignUp() {
     const [data, setData] = useState([])
     const {authenticated, handleLogin, handleRegister, error, setError, loading, setLoading} = useContext(AuthContext)
 
-    console.debug("Login Auth",authenticated)
-    console.debug("Loading",loading)
 
     useEffect(()=>{
-    })
+      setError("")
+    }, [])
 
     const handleSubmit = async (event) => {
         setLoading(true)
         event.preventDefault();
         setError('')
         const data = new FormData(event.currentTarget);
-        console.log({
-            name: data.get('name'),
-            phone: data.get('phone'),
-            password: data.get('password'),
-        });
         
         await handleRegister(data.get('name'), data.get('phone'), data.get('password'));
         setTimeout(() => setLoading(false), 2000)
@@ -60,7 +54,7 @@ export default function SignUp() {
                 sm={4}
                 md={6}
                 sx={{
-                    backgroundImage: 'url(https://picsum.photos/200/300)',
+                    backgroundImage: 'url(https://source.unsplash.com/random)',
                     backgroundRepeat: 'no-repeat',
                     backgroundColor: (t) =>
                         t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],

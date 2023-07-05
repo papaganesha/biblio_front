@@ -15,10 +15,6 @@ import History from '../History.js';
 function Main() {
     const { authenticated, handleLogin } = useContext(AuthContext)
 
-    console.debug("HandleLogin", handleLogin)
-
-    console.debug("Authenticated", authenticated)
-
     // {authenticated != null ? (
     //   <AuthProvider>
     //     <div><p>Authenticated</p></div>

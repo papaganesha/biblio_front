@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Api from '../../Api.js';
 import History from '../../History.js';
@@ -10,7 +10,7 @@ export default function useAuth() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [errorType, setErrorType] = useState("")
-
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     setLoading(true)
@@ -36,7 +36,6 @@ export default function useAuth() {
     }
     catch (err) {
       setAuthenticated(false)
-      console.log(err.response.data)
       setError(err.response.data)
     } 
 
@@ -47,7 +46,7 @@ export default function useAuth() {
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
       Api.defaults.headers.common['Authorization'] = refreshToken;
-      History.push('/books');
+      navigate('/books');
       
     }
 
@@ -66,7 +65,6 @@ export default function useAuth() {
       })
     }
     catch (err) {
-      console.log(err.response.data)
       setErrorType('error')
       setError(err.response.data)
 
@@ -75,7 +73,7 @@ export default function useAuth() {
     if (res) {
       setErrorType('sucess')
       setError(res.data)
-      // History.push('/signin');
+      navigate('/signin');
     }
 
     setLoading(false)
@@ -83,7 +81,6 @@ export default function useAuth() {
   }
 
   async function handleLogout() {
-    console.log('LOGOUT')
     setAuthenticated(false);
 
     localStorage.removeItem('accessToken');
@@ -91,7 +88,7 @@ export default function useAuth() {
 
     Api.defaults.headers.Authorization = undefined;
     setLoading(false)
-    // History.push('/signin');
+    navigate('/signin');
   }
 
   return { authenticated, loading, setLoading, handleLogin, handleLogout, error, setError, errorType, setErrorType, handleRegister};

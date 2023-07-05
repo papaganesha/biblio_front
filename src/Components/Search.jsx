@@ -52,7 +52,6 @@ export default function SearchComponent({ data }) {
 
     React.useEffect(() => {
         const result = data.filter(book => book.name.indexOf(searchInput) === -1)
-        console.log(result)
     },[searchInput]);
 
     return (

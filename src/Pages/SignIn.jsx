@@ -28,9 +28,6 @@ const defaultTheme = createTheme();
 export default function SignIn() {
     const {authenticated, handleLogin, error, setError, loading, setLoading} = useContext(AuthContext)
 
-    console.debug("Login Auth",authenticated)
-    console.debug("Loading",loading)
-
     useEffect(()=>{
         setError("")
     }, [])
@@ -57,7 +54,7 @@ export default function SignIn() {
                 sm={4}
                 md={6}
                 sx={{
-                    backgroundImage: 'url(https://picsum.photos/200/300)',
+                    backgroundImage: 'url(https://source.unsplash.com/random)',
                     backgroundRepeat: 'no-repeat',
                     backgroundColor: (t) =>
                         t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -115,7 +112,7 @@ export default function SignIn() {
                         </Button>
                         <Grid container >
                             <Grid item>
-                                <NavLink to="/register">
+                                <NavLink to="/signup">
                                     {"Não possui uma conta? Cadastre-se"}
                                 </NavLink>
                             </Grid>

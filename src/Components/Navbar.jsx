@@ -80,7 +80,8 @@ export default function DrawerAppBar(props: Props) {
                   <NavLink to="/profile">Perfil</NavLink>
                 </Button>
                 <Button key='Logout' onClick={async()=>await handleLogout()} sx={{ color: '#fff' }}>
-                  <NavLink to="/signin">Logout</NavLink>
+                  
+                  Logout
                 </Button>
               </>
             )}

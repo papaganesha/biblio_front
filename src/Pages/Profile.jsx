@@ -25,7 +25,6 @@ import { Typography } from '@mui/material';
 
 
 const InlineEdit = ({ label, value, setValue, editStudent }) => {
-  console.log("44 ", label)
   const [editingValue, setEditingValue] = useState(value);
   const onChange = (event) => setEditingValue(event.target.value);
   const onKeyDown = (event) => {
@@ -74,7 +73,6 @@ function Profile() {
 
   const editStudent = async (label, value) => {
     setLoading(true)
-    console.log("33: ", label, " --- 44: ", value)
     let res
     try {
       if (label == 'name') {
@@ -91,7 +89,6 @@ function Profile() {
     }
     catch (error) {
       fecthUserInfo()
-      console.log("1: ", error.response)
       setErrorType('error')
       setError(error.response.data)
     }
@@ -99,14 +96,11 @@ function Profile() {
       fecthUserInfo()
       setErrorType('success')
       setError(res.data)
-
-      console.log("2: ", res.data)
     }
     setLoading(false)
   }
 
   const givebackBook = async (name) => {
-    console.log("name", name)
     setLoading(true)
     let res
     try {
@@ -134,10 +128,8 @@ function Profile() {
       res = await Api.get('/students')
     }
     catch (error) {
-      console.log(error.response)
     }
     if (res) {
-      console.log(res.data)
       setUserInfo(res.data)
       setName(res.data.name)
       setPhone(res.data.phone)
@@ -152,10 +144,10 @@ function Profile() {
       res = await Api.get('/withdraws')
     }
     catch (error) {
-      console.log(error.response)
+      setErrorType('error')
+      setError(error.response.data)
     }
     if (res) {
-      console.log("WITHDRAW:", res.data)
       setUserWithdraws(res.data)
     }
     setLoading(false)
@@ -170,7 +162,6 @@ function Profile() {
 
 
   function RenderProfileInfo({ userInfo, withdraws }) {
-    console.log(userInfo, "--- ", withdraws)
     if (userInfo && withdraws) {
       return (
         <Box>
