@@ -11,10 +11,9 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 600,
+  width: 700,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
+  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
   p: 4,
 };
 

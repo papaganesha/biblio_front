@@ -6,6 +6,7 @@ import { AuthContext } from '../Contexts/AuthContext';
 
 export default function PrivateRoute({children}){
     const {authenticated} = React.useContext(AuthContext);
+    //const authenticated = localStorage.getItem('authenticated');
 
     return authenticated ? children : <Navigate to="/signin" replace  />;
 }

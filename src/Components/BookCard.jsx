@@ -9,7 +9,7 @@ function BookCard({book}) {
   return (
       <Card sx={{ maxWidth: 350 }}>
         <CardMedia
-          sx={{ height: 350 }}
+          sx={{ height: 350}}
           image={book.img_url}
           title={book.name}
         />

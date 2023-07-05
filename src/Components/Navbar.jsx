@@ -1,3 +1,4 @@
+import './Navbar.css'
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -58,30 +59,30 @@ export default function DrawerAppBar(props: Props) {
 
             {!authenticated ? (
               <>
-                <Button key='Home' sx={{ color: '#fff' }}>
+                <Button key='Home' sx={{width: '130px', backgroundColor: 'white', color: 'black', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', mr: 2}}>
                   <NavLink exact to="/">Home</NavLink>
                 </Button>
-                <Button key='SignIn' sx={{ color: '#fff' }}>
+                <Button key='SignIn' sx={{ width: '130px', backgroundColor: 'white',color: '#fff' , boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', mr:2}}>
                   <NavLink to="/signin">Login</NavLink>
                 </Button>
-                <Button key='SignUp' sx={{ color: '#fff' }}>
+                <Button key='SignUp' sx={{ width: '130px', backgroundColor: 'white',color: '#fff' , boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
                 <NavLink to="/signup">Cadastro</NavLink>
               </Button>
               </>
             ) : (
               <>
-                <Button key='Home' sx={{ color: '#fff' }}>
+                <Button key='Home' sx={{ width: '130px',backgroundColor: 'white',color: '#fff' , boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', mr: 2}}>
                   <NavLink exact to="/">Home</NavLink>
                 </Button>
-                <Button key='Books' sx={{ color: '#fff' }}>
+                <Button key='Books' sx={{ width: '130px',backgroundColor: 'white',color: '#fff' , boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', mr: 2}}>
                 <NavLink to="/books">Livros</NavLink>
               </Button>
-                <Button key='Profile' sx={{ color: '#fff', style: 'none'}}>
+                <Button key='Profile' sx={{ width: '130px',backgroundColor: 'white',color: '#fff', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', mr: 2}}>
                   <NavLink to="/profile">Perfil</NavLink>
                 </Button>
-                <Button key='Logout' onClick={async()=>await handleLogout()} sx={{ color: '#fff' }}>
+                <Button key='Logout' onClick={async()=>await handleLogout()} sx={{ width: '130px',backgroundColor: 'white',color: 'black', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
+                <NavLink to="">Logout</NavLink>
                   
-                  Logout
                 </Button>
               </>
             )}

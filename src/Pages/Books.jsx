@@ -169,7 +169,15 @@ function Books() {
 
     else {
         return (
-        <div className="books_div">
+        <Box sx={{  
+            display: 'flex',
+            flexDirection: 'column',
+            alignCcontent: 'center',
+            justifyItems: 'center',
+            marginTop: '5rem', 
+            
+    }}
+    >
                 <Box sx={{pt:5, pb: 3}}>
                     <Typography sx={{textAlign: 'center'}} variant="h3" component="h3">Catalogo de Livros</Typography>
                 </Box>
@@ -183,7 +191,14 @@ function Books() {
                 <Box sx={{ display:'flex', alignItems: 'center', justifyContent: 'center' , py: 2, mb:2}} className="search_div">
                     <SearchComponent data={data} setData={setData} />
                 </Box>
-                <Grid className="books_grid" container spacing={4}>
+                <Grid sx={{
+                    width: '100%',
+                    padding: '1rem 3rem 1rem 3rem',
+                    display: 'flex',
+                    alignItems: 'center',   
+                    justifyContent: 'center',
+                    mb: 10
+                }} container spacing={4}>
                 {data.length > 0 && data.map((book) => (
                         <Grid item key={book.isbn} xs={12} sm={8} md={6} lg={2.5}>
                             <Card
@@ -220,7 +235,7 @@ function Books() {
                     ))}
 
                 </Grid>
-            </div>
+            </Box>
         );
     }
 }

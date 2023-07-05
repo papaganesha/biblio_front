@@ -11,10 +11,15 @@ function Home() {
   return (
     <Box sx={{
       width: '100%',
+      height: '100vh',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      background: '#009fff',
+      background: '-webkit-linear-gradient(to right, #009fff, #ec2f4b)',
+      background: 'linear-gradient(to right, #009fff, #ec2f4b)'
+
     }}>
 
     <Container sx={{
@@ -28,7 +33,7 @@ function Home() {
       backgroundColor: 'white',
       display: 'flex',
       flexDirection: 'column',
-      mt: 20
+      mt: 8
     }}>
 
       <h3>Bem-vindo(a) à nossa aplicação gerenciadora de biblioteca! </h3>

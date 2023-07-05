@@ -20,7 +20,7 @@ export default function RoutesIndex() {
         <AuthProvider>
             <Navbar />
             <Routes history={History}>
-                <Route path="/" element={<Home />} exact="true"/>
+                <Route path="/" element={<Home />}/>
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
 

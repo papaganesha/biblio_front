@@ -26,9 +26,9 @@ import { NavLink } from "react-router-dom";
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-    const {authenticated, handleLogin, error, setError, loading, setLoading} = useContext(AuthContext)
+    const { authenticated, handleLogin, error, setError, loading, setLoading } = useContext(AuthContext)
 
-    useEffect(()=>{
+    useEffect(() => {
         setError("")
     }, [])
 
@@ -44,84 +44,96 @@ export default function SignIn() {
 
 
     return (
-        <Box sx={{height: '105vh', width: '100%', display: 'flex', flexDirection: "columns", alignItems: 'center', justifyContent: 'center'}}>
-        <ThemeProvider theme={defaultTheme}>
-        <Grid container component="main" sx={{ width: '130vh', height: '70vh' }}>
-            <CssBaseline />
-            <Grid
-                item
-                xs={false}
-                sm={4}
-                md={6}
-                sx={{
-                    backgroundImage: 'url(https://source.unsplash.com/random)',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundColor: (t) =>
-                        t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }}
-            />
-            <Grid item xs={12} sm={8} md={5.6} component={Paper} elevation={6} square>
-                <Box
-                    sx={{
-                        my: 8,
-                        mx: 4,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5" sx={{ p: 0, mt: 2 }}>Login</Typography>
-                    {error.length > 0 && (<DismissAlert type="error" text={error} setText={setError}/>)}
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="regId"
-                            label="Id de Registro"
-                            name="regId"
-                            autoFocus
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            sx={{ mt: 1 }}
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Lembrar de mim"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+        <Box sx={{
+            height: '100vh',
+            width: '100%',
+            display: 'flex',
+            flexDirection: "columns",
+            alignItems: 'center',
+            justifyContent: 'center',
+            pt:8,
+            background: '#009fff',
+            background: '-webkit-linear-gradient(to right, #009fff, #ec2f4b)',
+            background: 'linear-gradient(to right, #009fff, #ec2f4b)'
+
+        }}>
+            <ThemeProvider theme={defaultTheme}>
+                <Grid container component="main" sx={{ width: '130vh', height: '70vh'}}>
+                    <CssBaseline />
+                    <Grid
+                        item
+                        xs={false}
+                        sm={4}
+                        md={6}
+                        sx={{
+                            backgroundImage: 'url(https://source.unsplash.com/random)',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundColor: (t) =>
+                                t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                        }}
+                    />
+                    <Grid item xs={12} sm={8} md={5.6} component={Paper} elevation={6} square>
+                        <Box
+                            sx={{
+                                my: 8,
+                                mx: 4,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
                         >
-                            {loading ? (<ReactLoading type='spin' color='cyanblue' height={25} width={25} />) : ('Entrar')}
-                        </Button>
-                        <Grid container >
-                            <Grid item>
-                                <NavLink to="/signup">
-                                    {"Não possui uma conta? Cadastre-se"}
-                                </NavLink>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Box>
-            </Grid>
-        </Grid>
-    </ThemeProvider>
+                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                <LockOutlinedIcon />
+                            </Avatar>
+                            <Typography component="h1" variant="h5" sx={{ p: 0, mt: 2 }}>Login</Typography>
+                            {error.length > 0 && (<DismissAlert type="error" text={error} setText={setError} />)}
+                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="regId"
+                                    label="Id de Registro"
+                                    name="regId"
+                                    autoFocus
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                />
+                                <FormControlLabel
+                                    sx={{ mt: 1 }}
+                                    control={<Checkbox value="remember" color="primary" />}
+                                    label="Lembrar de mim"
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    {loading ? (<ReactLoading type='spin' color='cyanblue' height={25} width={25} />) : ('Entrar')}
+                                </Button>
+                                <Grid container >
+                                    <Grid item>
+                                        <NavLink to="/signup">
+                                            {"Não possui uma conta? Cadastre-se"}
+                                        </NavLink>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </ThemeProvider>
         </Box>
     );
 }

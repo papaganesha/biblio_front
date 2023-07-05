@@ -1,0 +1,21 @@
+.navbar a{
+    color: black;
+    text-decoration:none;
+    width: 100%;
+}
+
+
+
+.navbar a.underline{
+    text-decoration:none;
+}
+
+.navbar a.active{
+    color:black;
+    font-weight: bold;
+}
+
+button:hover{
+    background-color: cornflowerblue !important;
+    color: blue !important;
+}

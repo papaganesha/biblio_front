@@ -165,7 +165,7 @@ function Profile() {
     if (userInfo && withdraws) {
       return (
         <Box>
-          <Box sx={{ mt: 1, mb: 3 }}>
+          <Box sx={{ mt: 1, mb: 3}}>
             <Typography variant="h4" component="h4" sx={{ textAlign: 'center' }}>Perfil - Controle</Typography>
 
           </Box>
@@ -177,23 +177,23 @@ function Profile() {
           )}
 
           {userInfo.length != 0 ? (
-            <Box sx={{ border: '1px solid black', borderRadius: 1, px: 4, py: 3 }}>
+            <Box sx={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: 1, px: 4, py: 3, backgroundColor: 'white'}}>
               <p>Nome: <InlineEdit label="name" value={name} setValue={setName} editStudent={editStudent} /></p>
               <p>Telefone: <InlineEdit label="phone" value={phone} setValue={setPhone} editStudent={editStudent} /></p>
               <p>Retiradas: {userInfo.withdraw}</p>
             </Box>
           ) : (
-            <Box sx={{ border: '1px solid black', borderRadius: 1, px: 4, py: 3 }}>
+            <Box sx={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: 1, px: 4, py: 3 ,backgroundColor: 'white'}}>
               <p>Nome: <ReactLoading type='spin' color='black' height={25} width={25} /></p>
               <p>Telefone: <ReactLoading type='spin' color='black' height={25} width={25} /></p>
               <p>Retiradas: <ReactLoading type='spin' color='black' height={25} width={25} /></p>
             </Box>
           )}
 
-          <Box sx={{ border: '1px solid black', borderRadius: 1, mt: 5, px: 2 }}>
-            <Typography variant="h5" component="h5" sx={{ textAlign: 'center', p: 2, mt: 2 }}>Livros Alugados</Typography>
+          <Box sx={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: 1, mt: 6, pb:2,  px: 3 ,backgroundColor: 'white'}}>
+            <Typography variant="h5" component="h5" sx={{ textAlign: 'center', p: 4, mt: 5 }}>Livros Alugados</Typography>
 
-            <TableContainer component={Paper} sx={{ mt: 2, mb: 8, border: '1px solid black' }}>
+            <TableContainer component={Paper} sx={{ mb: 8, border: '1px solid black' }}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
@@ -254,13 +254,20 @@ function Profile() {
     }
   }
 
-  if(!authenticated){
+  if (!authenticated) {
     <Navigate to="/signin" />
   }
 
 
   return (
-    <Box sx={{ px: 6, py: 4, mt: 8 }}>
+    <Box sx={{
+      px: 6, 
+      py: 4, 
+      mt: 8, 
+      background: '##ffefba',
+      background: '-webkit-linear-gradient(to right, #ffefba, #ffffff)',
+      background: 'linear-gradient(to right, #ffefba, #ffffff)'
+    }}>
       <RenderProfileInfo userInfo={userInfo} withdraws={userWithdraws} />
     </Box>
   );

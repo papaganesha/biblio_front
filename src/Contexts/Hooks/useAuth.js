@@ -73,7 +73,7 @@ export default function useAuth() {
     if (res) {
       setErrorType('sucess')
       setError(res.data)
-      navigate('/signin');
+      // navigate('/signin');
     }
 
     setLoading(false)
@@ -83,6 +83,7 @@ export default function useAuth() {
   async function handleLogout() {
     setAuthenticated(false);
 
+    localStorage.removeItem('authenticated');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
 

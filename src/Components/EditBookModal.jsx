@@ -1,3 +1,5 @@
+import './EditBookModal.css'
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -12,14 +14,14 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 600,
+  width: 650,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
+  py: 4,
+  px: 5,
+  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
 };
 
-const InlineEdit = ({ name, label, value, setValue, handleBookUpdate}) => {
+const InlineEdit = ({ id, name, label, value, setValue, handleBookUpdate}) => {
   const [editingValue, setEditingValue] = React.useState(value);
   const onChange = (event) => setEditingValue(event.target.value);
   const onKeyDown = (event) => {
@@ -34,8 +36,8 @@ const InlineEdit = ({ name, label, value, setValue, handleBookUpdate}) => {
     } else {
       if (event.target.value !== value) {
         setValue(event.target.value)
-        if (label == "name") {
-          await handleBookUpdate(name, 'name', event.target.value)
+        if (label == "newName") {
+          await handleBookUpdate(name, 'newName', event.target.value)
         }
         if (label == "author") {
           await handleBookUpdate(name, 'author', event.target.value)
@@ -60,6 +62,7 @@ React.useEffect(() => {
 
   return (
     <input
+      id={id}
       type="text"
       aria-label="Field name"
       value={editingValue}
@@ -71,14 +74,20 @@ React.useEffect(() => {
 
 export default function EditBookModal({ book, handleBookUpdate, error, errorType, setError, setErrorType }) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true)
+    setError("")
+  };
   const handleClose = () => setOpen(false);
   const [name, setName] = React.useState(book.name);
   const [author, setAuthor] = React.useState(book.author);
   const [publisher, setPublisher] = React.useState(book.publisher);
   const [publiDate, setPubliDate] = React.useState(book.publi_date);
   const [stock, setStock] = React.useState(book.stock);
-
+  
+  React.useEffect(()=>{
+    
+  },[])
 
 
   return (
@@ -91,21 +100,21 @@ export default function EditBookModal({ book, handleBookUpdate, error, errorType
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography sx={{mb: 3}} id="modal-modal-title" variant="h6" component="h2">
             Editar {Capitalize(book.name)}
           </Typography>
 
           {error.length > 0 && (
-            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}} >
               <DismissAlert type={errorType} text={error} setText={setError} />
             </Box>
           )}
 
-          <p>Nome: <InlineEdit name={book.name} label="newName" value={Capitalize(name)} setValue={setName} handleBookUpdate={handleBookUpdate} /></p>
-          <p>Autor: <InlineEdit name={book.name} label="author" value={author} setValue={setAuthor} handleBookUpdate={handleBookUpdate}/></p>
-          <p>Editora: <InlineEdit name={book.name} label="publisher" value={book.publisher} setValue={setPublisher} handleBookUpdate={handleBookUpdate} /></p>
-          <p>Data de Publicação: <InlineEdit name={book.name} label="publiDate" value={book.publi_date} setValue={setPubliDate} handleBookUpdate={handleBookUpdate} /></p>
-          <p>Estoque: <InlineEdit name={book.name} label="stock" value={book.stock} setValue={setStock} handleBookUpdate={handleBookUpdate} /></p>
+          <p>Nome: <InlineEdit id="nameInput" name={book.name} label="newName" value={Capitalize(name)} setValue={setName} handleBookUpdate={handleBookUpdate} /></p>
+          <p>Autor: <InlineEdit id="authorInput"  name={book.name} label="author" value={author} setValue={setAuthor} handleBookUpdate={handleBookUpdate}/></p>
+          <p>Editora: <InlineEdit id="publisherInput" name={book.name} label="publisher" value={publisher} setValue={setPublisher} handleBookUpdate={handleBookUpdate} /></p>
+          <p>Data de Publicação: <InlineEdit id="publiDateInput" name={book.name} label="publiDate" value={publiDate} setValue={setPubliDate} handleBookUpdate={handleBookUpdate} /></p>
+          <p>Estoque: <InlineEdit id="stockInput" name={book.name} label="stock" value={stock} setValue={setStock} handleBookUpdate={handleBookUpdate} /></p>
 
         </Box>
       </Modal>
