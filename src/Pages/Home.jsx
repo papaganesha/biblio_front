@@ -16,24 +16,23 @@ function Home() {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      background: '#009fff',
-      background: '-webkit-linear-gradient(to right, #009fff, #ec2f4b)',
-      background: 'linear-gradient(to right, #009fff, #ec2f4b)'
-
+      background: '##ffefba',
+      background: '-webkit-linear-gradient(to right, #ffefba, #ffffff)',
+      background: 'linear-gradient(to right, #ffefba, #ffffff)'
     }}>
 
     <Container sx={{
       width: '140rem',
       height: '32rem',
       maxHeight: '32rem',
-      border: '1px solid blue',
       borderRadius: '10px',
       py: 4,
       fontSize: '18px',
       backgroundColor: 'white',
       display: 'flex',
       flexDirection: 'column',
-      mt: 8
+      mt: 8,
+      boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
     }}>
 
       <h3>Bem-vindo(a) à nossa aplicação gerenciadora de biblioteca! </h3>

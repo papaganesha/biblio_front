@@ -28,8 +28,6 @@ import Api from '../Api.js';
 
 function Books() {
     const [data, setData] = useState([])
-    const [dense, setDense] = useState(false);
-    const [secondary, setSecondary] = useState(false);
 
     const { authenticated, error, setError, handleLogout, setLoading, loading, errorType, setErrorType } = useContext(AuthContext)
     const accessToken = localStorage.getItem('accessToken')
@@ -40,8 +38,7 @@ function Books() {
     //CHECK CONFIRMATION
     //PROCEED WITH WITHDRAW REQUEST
     //SHOW MESSAGE ACCORDINGLY WITH THE RESULT
-    async function handleWithdraw(name) {
-        setLoading(true);
+    async function handleWithdraw(name, handleClose) {
         setError("")
         let res
         try {
@@ -50,16 +47,16 @@ function Books() {
             })
         }
         catch (err) {
+            handleClose()
             setErrorType("error")
             setError(err.response.data)
         }
         if (res) {
-            fetchData()
+            await fetchData()
+            handleClose()
             setErrorType("success")
             setError(res.data)
-
         }
-        setLoading(false);
 
     }
 
@@ -67,8 +64,7 @@ function Books() {
     //CHECK CONFIRMATION
     //PROCEED WITH WITHDRAW REQUEST
     //SHOW MESSAGE ACCORDINGLY WITH THE RESULT
-    async function handleBookUpdate(name, label, value) {
-        setLoading(true);
+    async function handleBookUpdate(name, label, value, handleClose) {
         setError("")
         let res
         try {
@@ -105,22 +101,21 @@ function Books() {
 
         }
         catch (err) {
+            handleClose()
             setErrorType("error")
             setError(err.response.data)
         }
         if (res) {
             await fetchData()
+            handleClose()
             setErrorType("success")
             setError(res.data)
 
         }
-        setLoading(false);
-
     }
 
     const fetchData = async () => {
         setError("")
-        setLoading(true);
         let res
         try {
             res = await Api.get('/books')
@@ -138,36 +133,31 @@ function Books() {
         if (res) {
             setData(res.data);
         }
-        setLoading(false);
     };
 
     useEffect(() => {
+        setLoading(true);
+
         setError("")    
         fetchData();
+        setTimeout(() => setLoading(false), 2000);
 
     }, []);
 
+if(loading) {
+    return(
+        <Box sx={{display: 'flex', flexDisplay: 'columns', mt:10, height: '600px'}} >
+    <Box sx={{width: '100%'}}>
+         <Typography sx={{textAlign: 'center', pt:5, pb: 3}} variant="h3" component="h3">Catalogo de Livros</Typography>
+         <Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 12}}>
+         <ReactLoading type='spin' color='black' height={250} width={250} />
+     </Box>
+         </Box>
 
-
-    if (loading) {
-        return (
-            <Box sx={{display: 'flex', flexDisplay: 'columns', mt:10, height: '600px'}} >
-           <Box sx={{width: '100%'}}>
-                <Typography sx={{textAlign: 'center', pt:5, pb: 3}} variant="h3" component="h3">Catalogo de Livros</Typography>
-                <Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 12}}>
-                <ReactLoading type='spin' color='black' height={250} width={250} />
-            </Box>
-                </Box>
-
-            </Box>
-        )
-    }
-
-    if (!authenticated) {
-        return <Navigate to='/signin' />
-    }
-
-    else {
+     </Box>
+    )
+}
+else{
         return (
         <Box sx={{  
             display: 'flex',
@@ -202,7 +192,7 @@ function Books() {
                 {data.length > 0 && data.map((book) => (
                         <Grid item key={book.isbn} xs={12} sm={8} md={6} lg={2.5}>
                             <Card
-                                sx={{maxWidth: 300,  maxHeight:500 ,height: '100%', display: 'flex', flexDirection: 'column' }}
+                                sx={{maxWidth: 300,  maxHeight:500 ,height: '100%', display: 'flex', flexDirection: 'column', mb:1.5 }}
                             >
                                 <CardMedia
                                     component="container"
@@ -232,7 +222,7 @@ function Books() {
                                 </CardActions>
                             </Card>
                         </Grid>
-                    ))}
+        ))}
 
                 </Grid>
             </Box>

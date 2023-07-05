@@ -21,7 +21,7 @@ const style = {
   boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
 };
 
-const InlineEdit = ({ id, name, label, value, setValue, handleBookUpdate}) => {
+const InlineEdit = ({ id, name, label, value, setValue, handleBookUpdate, handleClose}) => {
   const [editingValue, setEditingValue] = React.useState(value);
   const onChange = (event) => setEditingValue(event.target.value);
   const onKeyDown = (event) => {
@@ -37,16 +37,16 @@ const InlineEdit = ({ id, name, label, value, setValue, handleBookUpdate}) => {
       if (event.target.value !== value) {
         setValue(event.target.value)
         if (label == "newName") {
-          await handleBookUpdate(name, 'newName', event.target.value)
+          await handleBookUpdate(name, 'newName', event.target.value, handleClose)
         }
         if (label == "author") {
-          await handleBookUpdate(name, 'author', event.target.value)
+          await handleBookUpdate(name, 'author', event.target.value, handleClose)
         }
         if (label == "publisher") {
-          await handleBookUpdate(name, 'publisher', event.target.value)
+          await handleBookUpdate(name, 'publisher', event.target.value, handleClose)
         }
         if (label == "publiDate") {
-          await handleBookUpdate(name, 'publiDate', event.target.value)
+          await handleBookUpdate(name, 'publiDate', event.target.value, handleClose)
         }
         if (label == "stock") {
           await handleBookUpdate(name, 'stock', event.target.value)
@@ -75,10 +75,14 @@ React.useEffect(() => {
 export default function EditBookModal({ book, handleBookUpdate, error, errorType, setError, setErrorType }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
-    setOpen(true)
     setError("")
+    setOpen(true)
   };
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setError("")
+    setOpen(false)
+  };
+
   const [name, setName] = React.useState(book.name);
   const [author, setAuthor] = React.useState(book.author);
   const [publisher, setPublisher] = React.useState(book.publisher);
@@ -110,11 +114,11 @@ export default function EditBookModal({ book, handleBookUpdate, error, errorType
             </Box>
           )}
 
-          <p>Nome: <InlineEdit id="nameInput" name={book.name} label="newName" value={Capitalize(name)} setValue={setName} handleBookUpdate={handleBookUpdate} /></p>
-          <p>Autor: <InlineEdit id="authorInput"  name={book.name} label="author" value={author} setValue={setAuthor} handleBookUpdate={handleBookUpdate}/></p>
-          <p>Editora: <InlineEdit id="publisherInput" name={book.name} label="publisher" value={publisher} setValue={setPublisher} handleBookUpdate={handleBookUpdate} /></p>
-          <p>Data de Publicação: <InlineEdit id="publiDateInput" name={book.name} label="publiDate" value={publiDate} setValue={setPubliDate} handleBookUpdate={handleBookUpdate} /></p>
-          <p>Estoque: <InlineEdit id="stockInput" name={book.name} label="stock" value={stock} setValue={setStock} handleBookUpdate={handleBookUpdate} /></p>
+          <p>Nome: <InlineEdit id="nameInput" name={book.name} label="newName" value={Capitalize(name)} setValue={setName} handleBookUpdate={handleBookUpdate} handleClose={handleClose}/></p>
+          <p>Autor: <InlineEdit id="authorInput"  name={book.name} label="author" value={author} setValue={setAuthor} handleBookUpdate={handleBookUpdate} handleClose={handleClose}/></p>
+          <p>Editora: <InlineEdit id="publisherInput" name={book.name} label="publisher" value={publisher} setValue={setPublisher} handleBookUpdate={handleBookUpdate}  handleClose={handleClose}/></p>
+          <p>Data de Publicação: <InlineEdit id="publiDateInput" name={book.name} label="publiDate" value={publiDate} setValue={setPubliDate} handleBookUpdate={handleBookUpdate} handleClose={handleClose} /></p>
+          <p>Estoque: <InlineEdit id="stockInput" name={book.name} label="stock" value={stock} setValue={setStock} handleBookUpdate={handleBookUpdate} handleClose={handleClose}/></p>
 
         </Box>
       </Modal>

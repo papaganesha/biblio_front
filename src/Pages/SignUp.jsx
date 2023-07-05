@@ -52,10 +52,9 @@ export default function SignUp() {
             alignItems: 'center',
             justifyContent: 'center',
             pt: 8,
-            background: '#009fff',
-            background: '-webkit-linear-gradient(to right, #009fff, #ec2f4b)',
-            background: 'linear-gradient(to right, #009fff, #ec2f4b)'
-
+            background: '##ffefba',
+            background: '-webkit-linear-gradient(to right, #ffefba, #ffffff)',
+            background: 'linear-gradient(to right, #ffefba, #ffffff)'
         }}>
             <ThemeProvider theme={defaultTheme}>
                 <Grid container component="main" sx={{ width: '130vh', height: '73vh' }}>

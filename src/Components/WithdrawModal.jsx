@@ -19,8 +19,14 @@ const style = {
 
 export default function WithdrawModal({book, handleWithdraw, error, errorType, setError, setErrorType}) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    setError("")
+    setOpen(true)
+  };
+  const handleClose = () => {
+    setError("")
+    setOpen(false)
+  };
 
   return (
     <div>
@@ -36,7 +42,7 @@ export default function WithdrawModal({book, handleWithdraw, error, errorType, s
             Quer retirar o livro {Capitalize(book.name)}?
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <Button onClick={async ()=> await handleWithdraw(book.name)}>Retirar</Button>
+          <Button onClick={async ()=> await handleWithdraw(book.name, handleClose)}>Retirar</Button>
           <Button onClick={handleClose}>Cancelar</Button>
           </Typography>
         </Box>
