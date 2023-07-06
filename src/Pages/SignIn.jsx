@@ -33,12 +33,10 @@ export default function SignIn() {
     }, [])
 
     const handleSubmit = async (event) => {
-        setLoading(true)
         event.preventDefault();
         setError('')
         const data = new FormData(event.currentTarget);
         await handleLogin(data.get('regId'), data.get('password'));
-        setTimeout(() => setLoading(false), 2000)
     };
 
 

@@ -22,9 +22,8 @@ export default function useAuth() {
     console.log("RT ",refreshToken)
 
     if (refreshToken) {
-      setAuthenticated(true);
       Api.defaults.headers.common['Authorization'] = refreshToken;
-      
+      setAuthenticated(true);
     }
 
     setLoading(false);
@@ -46,13 +45,14 @@ export default function useAuth() {
     } 
 
     if (res) {
-      setAuthenticated(true);
       const { accessToken, refreshToken } = res.data
       console.log("TOKENS ",res.data)
       localStorage.setItem('authenticated', true);
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
       Api.defaults.headers.common['Authorization'] = refreshToken;
+      setAuthenticated(true);
+
       navigate('/books');
       
     }
