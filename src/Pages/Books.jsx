@@ -218,11 +218,11 @@ else{
                     alignItems: 'center',   
                     justifyContent: 'center',
                     mb: 10
-                }} container spacing={4}>
+                }} container spacing={3}>
                 {data.length > 0 && data.map((book) => (
-                        <Grid item key={book.isbn} xs={12} sm={8} md={6} lg={2.5}>
+                        <Grid item key={book.isbn} xs={12} sm={6} md={3}>
                             <Card
-                                sx={{maxWidth: 300,  maxHeight:500 ,height: '100%', display: 'flex', flexDirection: 'column', mb:1.5 }}
+                                sx={{maxWidth: 300,  maxHeight:500 ,height: '100%', display: 'flex', flexDirection: 'column', mb:1 }}
                             >
                                 <CardMedia
                                     component="container"
@@ -231,7 +231,7 @@ else{
                                     
                                 />
                                 
-                                <CardContent sx={{ flexGrow: 1 }}>
+                                <CardContent sx={{ px:2, py:2, flexGrow: 1 }}>
                                     <Typography gutterBottom variant="h6" component="h6">
                                         {Capitalize(book.name)}
                                     </Typography>

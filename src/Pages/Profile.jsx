@@ -1,3 +1,5 @@
+import './Profile.css'
+
 import React, { useState, useEffect, useContext, ReactElement } from 'react'
 import Api from '../Api'
 import Container from '@mui/material/Container';
@@ -200,7 +202,7 @@ function Profile() {
           )}
 
           {userInfo.length != 0 ? (
-            <Box sx={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: 1, px: 4, py: 3, backgroundColor: 'white'}}>
+            <Box className="profileBox" sx={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: 1, px: 4, py: 3, backgroundColor: 'white'}}>
               <p>Nome: <InlineEdit label="name" value={name} setValue={setName} editStudent={editStudent} /></p>
               <p>Telefone: <InlineEdit label="phone" value={phone} setValue={setPhone} editStudent={editStudent} /></p>
               <p>Retiradas: {userInfo.withdraw}</p>
@@ -285,7 +287,8 @@ function Profile() {
 
 
   return (
-    <Box sx={{
+    <Box 
+    sx={{
       px: 6, 
       py: 4, 
       mt: 8, 

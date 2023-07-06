@@ -15,7 +15,7 @@
     font-weight: bold;
 }
 
-button:hover{
+.navbar button:hover{
     background-color: cornflowerblue !important;
-    color: blue !important;
+    color: white !important;
 }

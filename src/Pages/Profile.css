@@ -1,0 +1,10 @@
+.profileBox button{
+    background-color: red !important;
+    color: white !important;
+    padding: 6px 3rem 6px 3rem;
+}
+
+.profileBox button:hover{
+    background-color: tomato !important;
+    color: bisque !important;
+}

@@ -49,7 +49,7 @@ const InlineEdit = ({ id, name, label, value, setValue, handleBookUpdate, handle
           await handleBookUpdate(name, 'publiDate', event.target.value, handleClose)
         }
         if (label == "stock") {
-          await handleBookUpdate(name, 'stock', event.target.value)
+          await handleBookUpdate(name, 'stock', event.target.value, handleClose)
         }
       }
 

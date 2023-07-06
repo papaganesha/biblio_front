@@ -12,14 +12,19 @@ export default function useAuth() {
   const [errorType, setErrorType] = useState("")
   const navigate = useNavigate(); 
 
+  console.log("11 ",authenticated)
+
+
   useEffect(() => {
     setLoading(true)
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
+    console.log("RT ",refreshToken)
 
     if (refreshToken) {
-      Api.defaults.headers.common['Authorization'] = refreshToken;
       setAuthenticated(true);
+      Api.defaults.headers.common['Authorization'] = refreshToken;
+      
     }
 
     setLoading(false);
@@ -35,6 +40,7 @@ export default function useAuth() {
       })
     }
     catch (err) {
+      console.log("44 ", err.response.data)
       setAuthenticated(false)
       setError(err.response.data)
     } 
@@ -42,6 +48,7 @@ export default function useAuth() {
     if (res) {
       setAuthenticated(true);
       const { accessToken, refreshToken } = res.data
+      console.log("TOKENS ",res.data)
       localStorage.setItem('authenticated', true);
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
@@ -92,5 +99,5 @@ export default function useAuth() {
     navigate('/signin');
   }
 
-  return { authenticated, loading, setLoading, handleLogin, handleLogout, error, setError, errorType, setErrorType, handleRegister};
+  return { authenticated, setAuthenticated, loading, setLoading, handleLogin, handleLogout, error, setError, errorType, setErrorType, handleRegister};
 }

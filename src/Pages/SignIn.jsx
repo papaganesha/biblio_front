@@ -51,13 +51,13 @@ export default function SignIn() {
             flexDirection: "columns",
             alignItems: 'center',
             justifyContent: 'center',
-            pt: 8,
+            pt: 3,
             background: '##ffefba',
             background: '-webkit-linear-gradient(to right, #ffefba, #ffffff)',
             background: 'linear-gradient(to right, #ffefba, #ffffff)'
         }}>
             <ThemeProvider theme={defaultTheme}>
-                <Grid container component="main" sx={{ width: '130vh', height: '70vh' }}>
+                <Grid container component="main" sx={{ width: '70%', height: '55%' }}>
                     <CssBaseline />
                     <Grid
                         item

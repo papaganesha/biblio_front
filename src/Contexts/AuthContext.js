@@ -9,6 +9,8 @@ function AuthProvider({ children }) {
     authenticated, loading, handleLogin, handleLogout, error, setError , setLoading, errorType, setErrorType, handleRegister
   } = useAuth();
 
+  console.log("22 ",authenticated)
+
   return (
     <AuthContext.Provider value={{ loading, authenticated, handleLogin, handleLogout, error, setError, setLoading, errorType, setErrorType, handleRegister}}>
       {children}

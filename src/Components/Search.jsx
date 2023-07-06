@@ -47,11 +47,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function SearchComponent({ data }) {
+export default function SearchComponent({ data, setData }) {
     const [searchInput, setSearchInput] = React.useState("")
+    const [result, setResult] = React.useState([])
+    const [initialData, setInitialData] = React.useState(data)
 
     React.useEffect(() => {
-        const result = data.filter(book => book.name.indexOf(searchInput) === -1)
+        if(searchInput){
+            setData(data.filter(book => book.name.toLowerCase().includes(searchInput)))
+        }else{
+            setData(initialData)
+        }
+
     },[searchInput]);
 
     return (
